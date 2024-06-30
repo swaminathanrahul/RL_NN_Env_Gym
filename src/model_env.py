@@ -28,6 +28,10 @@ def load_data(pickle_file):
         data = pickle.load(f)
     inputs = torch.tensor(data[0], dtype=torch.float32)
     targets = torch.tensor(data[1], dtype=torch.float32)
+
+    print(f'Inputs shape: {inputs.shape}, Targets shape: {targets.shape}')
+    print(f'Inputs: {inputs[0]}, Targets: {targets[0]}')
+    
     dataset = TensorDataset(inputs, targets)
     return DataLoader(dataset, batch_size=32, shuffle=True)
 
@@ -55,7 +59,7 @@ def model_env():
     model, criterion, optimizer = create_model(input_dim, hidden_dim, output_dim)
 
     # Load data
-    pickle_file = 'data.pkl'  # Path to your pickle file
+    pickle_file = './data/random_agent_data_np.pkl'  # Path to your pickle file
     dataloader = load_data(pickle_file)
 
     # Train the model
