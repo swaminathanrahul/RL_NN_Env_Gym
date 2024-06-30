@@ -30,8 +30,8 @@ def load_data(pickle_file):
     targets = torch.tensor(data[1], dtype=torch.float32)
 
     print(f'Inputs shape: {inputs.shape}, Targets shape: {targets.shape}')
-    print(f'Inputs: {inputs[0]}, Targets: {targets[0]}')
-    
+    print(f'Inputs: {inputs[0]}, Targets: {targets[0]}') 
+
     dataset = TensorDataset(inputs, targets)
     return DataLoader(dataset, batch_size=32, shuffle=True)
 
@@ -47,7 +47,7 @@ def train_model(model, criterion, optimizer, dataloader, epochs=10):
             optimizer.step()
             epoch_loss += loss.item() * inputs.size(0)
         epoch_loss /= len(dataloader.dataset)
-        print(f'Epoch {epoch+1}/{epochs}, Loss: {epoch_loss:.4f}')
+        print(f'Epoch {epoch+1}/{epochs}, Loss: {epoch_loss}')
 
 def model_env():
     # Define input, hidden, and output dimensions
