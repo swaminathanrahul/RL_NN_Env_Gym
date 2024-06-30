@@ -26,8 +26,8 @@ def create_model(input_dim=5, hidden_dim=64, output_dim=4):
 def load_data(pickle_file):
     with open(pickle_file, 'rb') as f:
         data = pickle.load(f)
-    inputs = torch.tensor(data['inputs'], dtype=torch.float32)
-    targets = torch.tensor(data['targets'], dtype=torch.float32)
+    inputs = torch.tensor(data[0], dtype=torch.float32)
+    targets = torch.tensor(data[1], dtype=torch.float32)
     dataset = TensorDataset(inputs, targets)
     return DataLoader(dataset, batch_size=32, shuffle=True)
 
