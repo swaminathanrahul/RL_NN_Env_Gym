@@ -99,6 +99,7 @@ def model_env():
     input_dim = 5  # 4 for state vector s and 1 for action vector a
     hidden_dim = 64
     output_dim = 4  # Output state vector s_out
+    EPOCHS = 100
 
     # Create the model
     model, criterion, optimizer = create_model(input_dim, hidden_dim, output_dim)
@@ -117,11 +118,14 @@ def model_env():
     print(f'Inputs: {inputs[0]}, Targets: {targets[0]}') 
 
     dataset = TensorDataset(inputs, targets)
-    dataloader = DataLoader(dataset, batch_size=32, shuffle=True)
+    dataloader = DataLoader(dataset, batch_size=64, shuffle=True)
 
 
     # Train the model
-    train_model(model, criterion, optimizer, dataloader, epochs=10)
+    train_model(model, criterion, optimizer, dataloader, epochs=EPOCHS)
+
+    # Save the model
+    torch.save(model.state_dict(), f'./models/cart_pole_model_v_epochs_{EPOCHS}.pth')
 
 if __name__ == "__main__":
     model_env()
