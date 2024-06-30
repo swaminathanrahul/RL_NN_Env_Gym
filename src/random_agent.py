@@ -24,9 +24,11 @@ for i in range(number_of_episodes):
         done = terminated or truncated  # check if game over
 
 #print(f"X: {X[:5]}, \n y: {y[:5]}")
-data = [X, y]
+X = np.array(X)
+y = np.array(y)
+data = [X,y]
 
-with open("data/random_agent_data.pkl", "wb") as file:
+with open("data/random_agent_data_np.pkl", "wb") as file:
     file.write(pickle.dumps(data))
     
 
