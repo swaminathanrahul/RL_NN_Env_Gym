@@ -17,6 +17,13 @@ class StateActionNet(nn.Module):
         x = torch.relu(self.fc2(x))
         x = self.fc3(x)
         return x
+    
+    def predict(self, x):
+        self.eval()  # Set the model to evaluation mode
+        with torch.no_grad():  # Disable gradient computation
+            x = torch.tensor(x, dtype=torch.float32)
+            output = self.forward(x)
+        return output.numpy()  # Convert the output to a numpy array
 
 def create_model(input_dim=5, hidden_dim=64, output_dim=4):
     model = StateActionNet(input_dim, hidden_dim, output_dim)
@@ -50,12 +57,7 @@ def train_model(model, criterion, optimizer, dataloader, epochs=10):
         epoch_loss /= len(dataloader.dataset)
         print(f'Epoch {epoch+1}/{epochs}, Loss: {epoch_loss}')
 
-def predict(self, x):
-    self.eval()  # Set the model to evaluation mode
-    with torch.no_grad():  # Disable gradient computation
-        x = torch.tensor(x, dtype=torch.float32)
-        output = self.forward(x)
-    return output.numpy()  # Convert the output to a numpy array
+
 
 import os
 import pickle
@@ -126,6 +128,14 @@ def model_env():
 
     # Save the model
     torch.save(model.state_dict(), f'./models/cart_pole_model_v_epochs_{EPOCHS}.pth')
+
+    # Test the model
+    # model = StateActionNet(input_dim, hidden_dim, output_dim)
+    # model.load_state_dict(torch.load(f'./models/cart_pole_model_v_epochs_{EPOCHS}.pth'))
+    # model.eval()
+    x = np.array([0.1, 0.2, 0.3, 0.4, 0.5])
+    print(model.predict(x))
+
 
 if __name__ == "__main__":
     model_env()
