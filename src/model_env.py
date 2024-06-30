@@ -50,6 +50,12 @@ def train_model(model, criterion, optimizer, dataloader, epochs=10):
         epoch_loss /= len(dataloader.dataset)
         print(f'Epoch {epoch+1}/{epochs}, Loss: {epoch_loss}')
 
+def predict(self, x):
+    self.eval()  # Set the model to evaluation mode
+    with torch.no_grad():  # Disable gradient computation
+        x = torch.tensor(x, dtype=torch.float32)
+        output = self.forward(x)
+    return output.numpy()  # Convert the output to a numpy array
 
 import os
 import pickle
