@@ -1,9 +1,10 @@
-from gymnasium import gym
+import gymnasium as gym
+from gymnasium.envs.classic_control.cartpole import CartPoleEnv
 import math
 import logger
 import numpy as np
 
-class ModifiedGym(gym):
+class ModifiedCartPole(CartPoleEnv):
     def __init__(self, mlp):
         super().__init__()
         self.mlp = mlp
@@ -44,7 +45,7 @@ class ModifiedGym(gym):
         # ============ NEW CODE ============
 
         model = self.mlp()
-        x, x_dot, theta, theta_dot = model(np.array([x, x_dot, theta, theta_dot, force]))
+        x, x_dot, theta, theta_dot = model(np.array([x, x_dot, theta, theta_dot, action]))
         self.state = (x, x_dot, theta, theta_dot)
 
         # ============ NEW CODE ENDS =======
